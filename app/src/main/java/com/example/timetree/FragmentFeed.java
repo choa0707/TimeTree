@@ -9,7 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-public class FragmentCalender extends Fragment {
+public class FragmentFeed extends Fragment {
     private View view;
 
     @Nullable
@@ -18,7 +18,7 @@ public class FragmentCalender extends Fragment {
                              @Nullable Bundle savedInstanceState)
     {
         // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_calendar, container, false);
+        view = inflater.inflate(R.layout.fragment_feed, container, false);
         return view;
     }
 }
