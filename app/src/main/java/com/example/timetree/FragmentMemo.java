@@ -19,6 +19,7 @@ public class FragmentMemo extends Fragment {
     {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_memo, container, false);
+        gridView = view.findViewById(R.id.gridView);
         return view;
     }
 }
