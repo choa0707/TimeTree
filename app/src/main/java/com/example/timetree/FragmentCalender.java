@@ -49,7 +49,7 @@ public class FragmentCalender extends Fragment {
             @Override
             public void onDayClick(EventDay eventDay) {
                 Calendar clickedDayCalendar = eventDay.getCalendar();
-
+                Toast.makeText(getActivity(), eventDay.getCalendar().getTime().toString(), Toast.LENGTH_LONG).show();
             }
         });
 
