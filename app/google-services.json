@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "324719648353",
+    "firebase_url": "https://daltree-d7366.firebaseio.com",
+    "project_id": "daltree-d7366",
+    "storage_bucket": "daltree-d7366.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:324719648353:android:0090b670cd31194ae55420",
+        "android_client_info": {
+          "package_name": "com.example.timetree"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "324719648353-r8mpdgrqtg50u6ng6f8bjvsac2j4057q.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.timetree",
+            "certificate_hash": "b0357fd2ed7711b86ac9ff51f00f44f80c37f0cf"
+          }
+        },
+        {
+          "client_id": "324719648353-mkt6qj6u64mh135u20u1c1l78rl39ser.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDwJ263YcakqWxAIrPdRlQEVR6QV2h3Hs8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "324719648353-mkt6qj6u64mh135u20u1c1l78rl39ser.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
