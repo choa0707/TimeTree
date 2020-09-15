@@ -1,9 +1,11 @@
 package com.example.timetree;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -11,7 +13,7 @@ import androidx.fragment.app.Fragment;
 
 public class FragmentMore extends Fragment {
     private View view;
-
+    Button login_button;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -19,6 +21,16 @@ public class FragmentMore extends Fragment {
     {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_more, container, false);
+        login_button = view.findViewById(R.id.more_login_button);
+
+        login_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), LoginActivity.class);
+                startActivity(intent);
+            }
+        });
+
         return view;
     }
 }
