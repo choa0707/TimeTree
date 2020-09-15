@@ -9,6 +9,10 @@ public class EventItem {
     List<String> category;
     Integer color;
     Integer alarm;
+
+    public EventItem() {
+    }
+
     String phone;
     String location;
 

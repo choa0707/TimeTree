@@ -31,6 +31,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
@@ -38,6 +39,7 @@ import java.util.concurrent.TimeUnit;
 
 public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
     private static final int RC_SIGN_IN = 1001;
+    UserData userData;
     SignInButton signInButton;
     private GoogleApiClient mGoogleApiClient;
     private FirebaseAuth mAuth;
@@ -100,6 +102,12 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                             // Sign in success, update UI with the signed-in user's information
                             Log.d("FirebaseLogin", "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
+
+                            String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                            userData = new UserData(FirebaseAuth.getInstance().getCurrentUser().getEmail(), FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
+                            FirebaseDatabase.getInstance().getReference().child("users").child(uid).setValue(userData);
+
+
 
                         } else {
                             // If sign in fails, display a message to the user.
