@@ -1,6 +1,6 @@
 package com.example.timetree;
 
-public class GridViewListItem {
+class GridViewListItem {
     String title;
     String date;
 
@@ -24,3 +24,4 @@ public class GridViewListItem {
         this.date = date;
     }
 }
+

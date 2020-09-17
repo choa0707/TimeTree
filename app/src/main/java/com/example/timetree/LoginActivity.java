@@ -58,6 +58,18 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         login_button = findViewById(R.id.login_button);
         loginid_text = findViewById(R.id.Loginid_text);
         loginpw_text = findViewById(R.id.Loginpw_text);
+
+        mAuth = FirebaseAuth.getInstance();
+
+        login_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                loginid = loginid_text.getText().toString();
+                loginpw = loginpw_text.getText().toString();
+                Log.d("test", loginid + '\n' + loginpw);
+                createAccount(loginid, loginpw);
+            }
+        });
         signin_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -99,19 +111,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 Toast.makeText(getApplicationContext(), "로그인 실패", Toast.LENGTH_SHORT).show();
             }
         }
-    }
-
-    private void login() {
-        login_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                loginid = loginid_text.getText().toString();
-                loginpw = loginpw_text.getText().toString();
-                Log.d("test", loginid + '\n' + loginpw);
-                createAccount(loginid, loginpw);
-            }
-        });
-        mAuth = FirebaseAuth.getInstance();
     }
 
         @Override
