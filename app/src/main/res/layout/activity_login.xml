@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".LoginActivity"
+    android:padding="10dp"
 
     android:orientation="vertical">
 
@@ -17,20 +18,42 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:layout_marginBottom="70dp"
+            android:text="로그인"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:text="이메일"
             ></TextView>
         <EditText
+            android:id="@+id/Loginid_text"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"></EditText>
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"></EditText>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="비밀번호"
             ></TextView>
         <EditText
+            android:id="@+id/Loginpw_text"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"></EditText>
+            android:layout_height="wrap_content"
+            android:inputType="textPassword">
+        </EditText>
     </LinearLayout>
+    <Button
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:text="로그인"
+        android:id="@+id/login_button"
+        android:layout_gravity="center"
+        ></Button>
     <Button
         android:layout_width="200dp"
         android:layout_height="wrap_content"

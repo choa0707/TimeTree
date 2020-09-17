@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.Auth;
@@ -43,16 +44,24 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     SignInButton signInButton;
     private GoogleApiClient mGoogleApiClient;
     private FirebaseAuth mAuth;
+    private String loginid, loginpw;
     Button signin_button;
+    Button login_button;
+    EditText loginid_text;
+    EditText loginpw_text;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         signin_button = findViewById(R.id.signin_button);
+        login_button = findViewById(R.id.login_button);
+        loginid_text = findViewById(R.id.Loginid_text);
+        loginpw_text = findViewById(R.id.Loginpw_text);
         signin_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(),SignupActivity.class);
+                Intent intent = new Intent(getApplicationContext(), SignupActivity.class);
                 startActivity(intent);
             }
         });
@@ -76,6 +85,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             }
         });
     }
+
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
@@ -83,15 +93,62 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             if (result.isSuccess()) {
                 GoogleSignInAccount account = result.getSignInAccount();
-                Log.d("FirebaseLogin","Account="+account);
+                Log.d("FirebaseLogin", "Account=" + account);
                 firebaseAuthWithGoogle(account);
-            }
-            else
-            {
+            } else {
                 Toast.makeText(getApplicationContext(), "로그인 실패", Toast.LENGTH_SHORT).show();
             }
         }
     }
+
+    private void login() {
+        login_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                loginid = loginid_text.getText().toString();
+                loginpw = loginpw_text.getText().toString();
+                Log.d("test", loginid + '\n' + loginpw);
+                createAccount(loginid, loginpw);
+            }
+        });
+        mAuth = FirebaseAuth.getInstance();
+    }
+
+        @Override
+        public void onStart () {
+            super.onStart();
+
+            FirebaseUser currentUser = mAuth.getCurrentUser();
+        }
+
+        public void createAccount (String email, String password){
+            mAuth.signInWithEmailAndPassword(email, password)
+                    .
+
+                            addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    if (task.isSuccessful()) {
+                                        // Sign in success, update UI with the signed-in user's information
+                                        Log.d("userlogin", "signInWithEmail:success");
+                                        FirebaseUser user = mAuth.getCurrentUser();
+                                        Toast.makeText(getApplicationContext(), "로그인 되었습니다..",
+                                                Toast.LENGTH_SHORT).show();
+                                        finish();
+                                        ;
+                                    } else {
+                                        // If sign in fails, display a message to the user.
+                                        Log.w("userlogin", "signInWithEmail:failure", task.getException());
+                                        Toast.makeText(getApplicationContext(), "Authentication failed.",
+                                                Toast.LENGTH_SHORT).show();
+
+                                    }
+
+                                    // ...
+                                }
+                            });
+        }
+
     private void firebaseAuthWithGoogle(GoogleSignInAccount idToken) {
         AuthCredential credential = GoogleAuthProvider.getCredential(idToken.getIdToken(), null);
         mAuth.signInWithCredential(credential)
