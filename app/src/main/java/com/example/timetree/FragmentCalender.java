@@ -47,47 +47,48 @@ public class FragmentCalender extends Fragment {
         view = inflater.inflate(R.layout.fragment_calendar, container, false);
         List<EventDay> events = new ArrayList<>();
         String uid = FirebaseAuth.getInstance().getUid();
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-
-        DatabaseReference myRef = database.getReference().child("users").child(uid).child("events");
         CalendarView calendarView = (CalendarView) view.findViewById(R.id.calendarView);
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
-                for (DataSnapshot i : dataSnapshot.getChildren()){
-                    eventItems.add(i.getValue(EventItem.class));
+        if (uid != null) {
+            FirebaseDatabase database = FirebaseDatabase.getInstance();
 
-                    EventItem eventItem = i.getValue(EventItem.class);
-                    s_y = eventItem.getStart_year();
-                    s_m = eventItem.getStart_month();
-                    s_d = eventItem.getStart_day();
-                    e_y = eventItem.getEnd_year();
-                    e_m = eventItem.getEnd_month();
-                    e_d = eventItem.getEnd_day();
-                    Log.d("test", s_y+"/"+s_m+"/"+s_d+"/"+e_y+"/"+e_m+"/"+e_d);
+            DatabaseReference myRef = database.getReference().child("users").child(uid).child("events");
 
-                    for (int j = s_d; j <= e_d; j++)
-                    {
-                        Calendar calendar1 = Calendar.getInstance();
-                        calendar1.add(s_m, j);
-                        Log.d("test", s_y+"/"+s_m+"/"+j);
+            myRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    // This method is called once with the initial value and again
+                    // whenever data at this location is updated.
+                    for (DataSnapshot i : dataSnapshot.getChildren()) {
+                        eventItems.add(i.getValue(EventItem.class));
 
+                        EventItem eventItem = i.getValue(EventItem.class);
+                        s_y = eventItem.getStart_year();
+                        s_m = eventItem.getStart_month();
+                        s_d = eventItem.getStart_day();
+                        e_y = eventItem.getEnd_year();
+                        e_m = eventItem.getEnd_month();
+                        e_d = eventItem.getEnd_day();
+                        Log.d("test", s_y + "/" + s_m + "/" + s_d + "/" + e_y + "/" + e_m + "/" + e_d);
+                        for (int j = s_d; j <= e_d; j++) {
+                            Calendar calendar1 = Calendar.getInstance();
+                            calendar1.set(s_y, s_m - 1, j);
+                            events.add(new EventDay(calendar1, R.drawable.ic_baseline_event_24, Color.parseColor("#228B22")));
+                            calendarView.setEvents(events);
+                            Log.d("test", s_y + "/" + s_m + "/" + j);
+                        }
+
+                        //  Log.d("read", eventItem.getTitle());
                     }
-                    calendarView.setEvents(events);
-                    Log.d("read", eventItem.getTitle());
+
                 }
 
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Log.w("read", "Failed to read value.", error.toException());
-            }
-        });
-
+                @Override
+                public void onCancelled(DatabaseError error) {
+                    // Failed to read value
+                    Log.w("read", "Failed to read value.", error.toException());
+                }
+            });
+        }
         fab = view.findViewById(R.id.fb);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,7 +103,6 @@ public class FragmentCalender extends Fragment {
         Calendar calendar2 = Calendar.getInstance();
         calendar2.add(Calendar.DAY_OF_MONTH, 15);
         events.add(new EventDay(calendar2, R.drawable.ic_baseline_event_24, Color.parseColor("#228B22")));
-
 
 
         calendarView.setOnDayClickListener(new OnDayClickListener() {

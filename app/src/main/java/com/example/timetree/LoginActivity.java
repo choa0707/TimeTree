@@ -40,7 +40,7 @@ import java.util.concurrent.TimeUnit;
 
 public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
     private static final int RC_SIGN_IN = 1001;
-    UserData userData;
+
     SignInButton signInButton;
     private GoogleApiClient mGoogleApiClient;
     private FirebaseAuth mAuth;
@@ -159,9 +159,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                             Log.d("FirebaseLogin", "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
 
-                            String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                            userData = new UserData(FirebaseAuth.getInstance().getCurrentUser().getEmail(), FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
-                            FirebaseDatabase.getInstance().getReference().child("users").child(uid).setValue(userData);
+
 
 
 

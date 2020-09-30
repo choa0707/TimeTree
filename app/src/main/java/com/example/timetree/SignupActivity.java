@@ -15,9 +15,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class SignupActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
+    UserData userData;
     private String id, pw;
     EditText edit_id, edit_pw;
     Button signup_button;
@@ -59,6 +61,9 @@ public class SignupActivity extends AppCompatActivity {
                             FirebaseUser user = mAuth.getCurrentUser();
                             Toast.makeText(getApplicationContext(), "회원가입을 축하합니다.",
                                     Toast.LENGTH_SHORT).show();
+                            String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                            userData = new UserData(FirebaseAuth.getInstance().getCurrentUser().getEmail(), FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
+                            FirebaseDatabase.getInstance().getReference().child("users").child(uid).setValue(userData);
                             finish();
                         } else {
                             // If sign in fails, display a message to the user.
