@@ -45,6 +45,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private GoogleApiClient mGoogleApiClient;
     private FirebaseAuth mAuth;
     private String loginid, loginpw;
+    private static final int REO_SIGN_GOOGLE = 100;
     Button signin_button;
     Button login_button;
     EditText loginid_text;
@@ -58,6 +59,17 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         login_button = findViewById(R.id.login_button);
         loginid_text = findViewById(R.id.Loginid_text);
         loginpw_text = findViewById(R.id.Loginpw_text);
+        login_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                loginid = loginid_text.getText().toString();
+                loginpw = loginpw_text.getText().toString();
+                Log.d("test", loginid + '\n' + loginpw);
+                createAccount(loginid, loginpw);
+            }
+        });
+        mAuth = FirebaseAuth.getInstance();
+
         signin_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -95,24 +107,18 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 GoogleSignInAccount account = result.getSignInAccount();
                 Log.d("FirebaseLogin", "Account=" + account);
                 firebaseAuthWithGoogle(account);
+
+
+                Toast.makeText(LoginActivity.this, "로그인 성공", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getApplicationContext(), FragmentCalender.class);
+                startActivityForResult(intent, REO_SIGN_GOOGLE);
+
             } else {
                 Toast.makeText(getApplicationContext(), "로그인 실패", Toast.LENGTH_SHORT).show();
             }
         }
     }
 
-    private void login() {
-        login_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                loginid = loginid_text.getText().toString();
-                loginpw = loginpw_text.getText().toString();
-                Log.d("test", loginid + '\n' + loginpw);
-                createAccount(loginid, loginpw);
-            }
-        });
-        mAuth = FirebaseAuth.getInstance();
-    }
 
         @Override
         public void onStart () {
@@ -134,7 +140,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                                         FirebaseUser user = mAuth.getCurrentUser();
                                         Toast.makeText(getApplicationContext(), "로그인 되었습니다..",
                                                 Toast.LENGTH_SHORT).show();
-                                        finish();
+                                        startLoginActivity();
                                         ;
                                     } else {
                                         // If sign in fails, display a message to the user.
@@ -144,10 +150,11 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
                                     }
 
-                                    // ...
-                                }
+
+                                    }
                             });
         }
+
 
     private void firebaseAuthWithGoogle(GoogleSignInAccount idToken) {
         AuthCredential credential = GoogleAuthProvider.getCredential(idToken.getIdToken(), null);
@@ -166,10 +173,11 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
 
 
+
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w("FirebaseLogin", "signInWithCredential:failure", task.getException());
-                            Toast.makeText(getApplicationContext(), "로그인 실패", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, "로그인 실패", Toast.LENGTH_SHORT).show();
                         }
                         // ...
                     }
@@ -178,5 +186,12 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult){
         Toast.makeText(getApplicationContext(), "실패",Toast.LENGTH_SHORT).show();
+
+
+    }
+    private void startLoginActivity() {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+
     }
 }
