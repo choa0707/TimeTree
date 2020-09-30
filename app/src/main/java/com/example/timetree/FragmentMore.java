@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -25,6 +26,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class FragmentMore extends Fragment {
     private View view;
+    GridView gridView;
     Button login_button;
     Button logout_button;
     @Nullable
@@ -52,6 +54,15 @@ public class FragmentMore extends Fragment {
         else
         {
             view = inflater.inflate(R.layout.fragment_more2, container, false);
+
+            gridView = view.findViewById(R.id.group_grid_view);
+            GroupListAdapter adapter = new GroupListAdapter();
+
+            adapter.addItem(new GroupListItem("launch",0));
+            adapter.addItem(new GroupListItem("PC",0));
+            adapter.addItem(new GroupListItem("추가하기",1));
+
+            gridView.setAdapter(adapter);
             logout_button = view.findViewById(R.id.more_logout_button);
             logout_button.setOnClickListener(new View.OnClickListener(){
 
@@ -59,12 +70,10 @@ public class FragmentMore extends Fragment {
                 public void onClick(View view) {
                     FirebaseAuth.getInstance().signOut();
                     Toast.makeText(getContext(), "로그아웃 되었습니다.",Toast.LENGTH_SHORT).show();
+                    onResume();
                 }
             });
         }
-
-
-
         return view;
     }
 }
