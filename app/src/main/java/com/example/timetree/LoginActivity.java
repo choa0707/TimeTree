@@ -40,12 +40,11 @@ import java.util.concurrent.TimeUnit;
 
 public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
     private static final int RC_SIGN_IN = 1001;
-    UserData userData;
+
     SignInButton signInButton;
     private GoogleApiClient mGoogleApiClient;
     private FirebaseAuth mAuth;
     private String loginid, loginpw;
-    private static final int REO_SIGN_GOOGLE = 100;
     Button signin_button;
     Button login_button;
     EditText loginid_text;
@@ -59,6 +58,9 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         login_button = findViewById(R.id.login_button);
         loginid_text = findViewById(R.id.Loginid_text);
         loginpw_text = findViewById(R.id.Loginpw_text);
+
+        mAuth = FirebaseAuth.getInstance();
+
         login_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -68,8 +70,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 createAccount(loginid, loginpw);
             }
         });
-        mAuth = FirebaseAuth.getInstance();
-
         signin_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -107,18 +107,11 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 GoogleSignInAccount account = result.getSignInAccount();
                 Log.d("FirebaseLogin", "Account=" + account);
                 firebaseAuthWithGoogle(account);
-
-
-                Toast.makeText(LoginActivity.this, "로그인 성공", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(getApplicationContext(), FragmentCalender.class);
-                startActivityForResult(intent, REO_SIGN_GOOGLE);
-
             } else {
                 Toast.makeText(getApplicationContext(), "로그인 실패", Toast.LENGTH_SHORT).show();
             }
         }
     }
-
 
         @Override
         public void onStart () {
@@ -140,7 +133,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                                         FirebaseUser user = mAuth.getCurrentUser();
                                         Toast.makeText(getApplicationContext(), "로그인 되었습니다..",
                                                 Toast.LENGTH_SHORT).show();
-                                        startLoginActivity();
+                                        finish();
                                         ;
                                     } else {
                                         // If sign in fails, display a message to the user.
@@ -150,11 +143,10 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
                                     }
 
-
-                                    }
+                                    // ...
+                                }
                             });
         }
-
 
     private void firebaseAuthWithGoogle(GoogleSignInAccount idToken) {
         AuthCredential credential = GoogleAuthProvider.getCredential(idToken.getIdToken(), null);
@@ -167,9 +159,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                             Log.d("FirebaseLogin", "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
 
-                            String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                            userData = new UserData(FirebaseAuth.getInstance().getCurrentUser().getEmail(), FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
-                            FirebaseDatabase.getInstance().getReference().child("users").child(uid).setValue(userData);
 
 
 
@@ -177,7 +166,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w("FirebaseLogin", "signInWithCredential:failure", task.getException());
-                            Toast.makeText(LoginActivity.this, "로그인 실패", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "로그인 실패", Toast.LENGTH_SHORT).show();
                         }
                         // ...
                     }
@@ -186,12 +175,5 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult){
         Toast.makeText(getApplicationContext(), "실패",Toast.LENGTH_SHORT).show();
-
-
-    }
-    private void startLoginActivity() {
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-
     }
 }
