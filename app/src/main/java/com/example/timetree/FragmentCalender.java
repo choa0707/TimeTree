@@ -45,6 +45,7 @@ public class FragmentCalender extends Fragment {
     {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_calendar, container, false);
+
         List<EventDay> events = new ArrayList<>();
         String uid = FirebaseAuth.getInstance().getUid();
         CalendarView calendarView = (CalendarView) view.findViewById(R.id.calendarView);

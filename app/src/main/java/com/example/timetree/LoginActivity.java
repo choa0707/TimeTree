@@ -132,14 +132,15 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                                         // Sign in success, update UI with the signed-in user's information
                                         Log.d("userlogin", "signInWithEmail:success");
                                         FirebaseUser user = mAuth.getCurrentUser();
-                                        Toast.makeText(getApplicationContext(), "로그인 되었습니다..",
+                                        Toast.makeText(getApplicationContext(), "로그인 되었습니다.",
                                                 Toast.LENGTH_SHORT).show();
+                                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                        startActivity(intent);
                                         finish();
-                                        ;
                                     } else {
                                         // If sign in fails, display a message to the user.
                                         Log.w("userlogin", "signInWithEmail:failure", task.getException());
-                                        Toast.makeText(getApplicationContext(), "Authentication failed.",
+                                        Toast.makeText(getApplicationContext(), "로그인에 실패했습니다.",
                                                 Toast.LENGTH_SHORT).show();
 
                                     }

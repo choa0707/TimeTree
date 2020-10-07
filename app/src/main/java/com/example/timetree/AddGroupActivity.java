@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -20,10 +21,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class AddGroupActivity extends AppCompatActivity {
+    ArrayList<String> group_data;
     String add_id;
     String get_id;
+    GroupData groupData;
     int success = 0;
     RecyclerAdapter recyclerAdapter;
     EditText editText;
@@ -50,6 +55,29 @@ public class AddGroupActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
+                if (recyclerAdapter.getItemCount() == 0)
+                {
+                    Toast.makeText(getApplicationContext(), "멤버를 선택해주세요.",Toast.LENGTH_LONG).show();
+                }
+                else
+                {
+                    DatabaseReference groupRef = FirebaseDatabase.getInstance().getReference().child("Groups");
+                    DatabaseReference newGroupRef = groupRef.push();
+                    DatabaseReference groupMemberRef = newGroupRef.child("members");
+
+
+
+                    for (int i = 0; i < recyclerAdapter.getItemCount(); i++)
+                    {
+                        GroupMember groupMember = new GroupMember(recyclerAdapter.getItem(i));
+                        groupMemberRef.push().setValue(groupMember);
+
+                    }
+                    GroupMember groupMember = new GroupMember(FirebaseAuth.getInstance().getCurrentUser().getEmail());
+                    groupMemberRef.push().setValue(groupMember);
+                    Toast.makeText(getApplicationContext(), "등록되었습니다.",Toast.LENGTH_LONG).show();
+                    finish();
+                }
 
             }
         });
@@ -97,6 +125,7 @@ public class AddGroupActivity extends AppCompatActivity {
                         else
                         {
                             recyclerAdapter.addItem(get_id);
+                            recyclerAdapter.notifyDataSetChanged();
                         }
                     }
 
@@ -108,4 +137,11 @@ public class AddGroupActivity extends AppCompatActivity {
             }
         });
     }
+}
+class GroupMember{
+    public GroupMember(String email) {
+        this.email = email;
+    }
+
+    public String email;
 }
