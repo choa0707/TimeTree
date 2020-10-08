@@ -39,9 +39,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ItemVi
         Log.d("recyler", "success add "+email);
         arrayList.add(email);
     }
-    void deleteItem(int i)
-    {
 
+    public String getItem(int position)
+    {
+        return arrayList.get(position);
     }
     public class ItemViewHolder extends RecyclerView.ViewHolder{
         TextView text_email;
@@ -55,6 +56,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ItemVi
                 @Override
                 public void onClick(View view) {
                     arrayList.remove(position);
+                    notifyDataSetChanged();
+                    notifyItemChanged(position);
                 }
             });
         }
