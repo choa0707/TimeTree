@@ -38,8 +38,79 @@
         android:layout_marginLeft="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="8">
+        android:layout_weight="7">
     </androidx.recyclerview.widget.RecyclerView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:layout_marginRight="5dp"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_weight="3"
+                android:text="그룹 이름 :"
+                android:textSize="20dp"
+                >
+            </TextView>
+            <EditText
+                android:id="@+id/group_name"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textSize="20dp"
+                android:layout_weight="7">
+
+            </EditText>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_weight="3"
+                android:text="그룹 이미지"
+                android:textSize="20dp"
+                >
+            </TextView>
+            <TextView
+                android:id="@+id/group_image_url"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="5"
+                android:text="이미지 주소"
+                android:textColor="@color/cardview_shadow_start_color"
+                android:textSize="20dp"
+                android:gravity="center"
+                >
+
+            </TextView>
+            <Button
+                android:id="@+id/group_image"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:text="찾아보기">
+
+            </Button>
+        </LinearLayout>
+
+    </LinearLayout>
+
     <Button
         android:id="@+id/group_regist"
         android:layout_width="match_parent"
