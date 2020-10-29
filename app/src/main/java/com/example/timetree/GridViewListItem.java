@@ -24,4 +24,3 @@ class GridViewListItem {
         this.date = date;
     }
 }
-

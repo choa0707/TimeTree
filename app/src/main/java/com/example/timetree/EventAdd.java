@@ -167,7 +167,14 @@ public class EventAdd extends AppCompatActivity {
                 String eid = date.toString();
                 String uid = FirebaseAuth.getInstance().getUid();
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
-                database.getReference().child("users").child(uid).child("events").child(eid).setValue(eventItem);
+                if (MyGlobals.getInstance().getmGlobalString().equals(""))
+                {
+                    database.getReference().child("users").child(uid).child("events").child(eid).setValue(eventItem);
+                }
+                else
+                {
+                    database.getReference().child("Groups").child(MyGlobals.getInstance().getmGlobalString()).child("events").child(eid).setValue(eventItem);
+                }
                 Toast.makeText(getApplicationContext(), "등록 되었습니다.", Toast.LENGTH_SHORT).show();
                 finish();
             }

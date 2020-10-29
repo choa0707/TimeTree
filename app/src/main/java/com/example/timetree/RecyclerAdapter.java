@@ -34,7 +34,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ItemVi
     public int getItemCount() {
         return arrayList.size();
     }
-    void addItem(String email)
+    public void addItem(String email)
     {
         Log.d("recyler", "success add "+email);
         arrayList.add(email);
