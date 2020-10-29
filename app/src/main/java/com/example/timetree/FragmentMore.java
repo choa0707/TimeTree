@@ -34,7 +34,7 @@ public class FragmentMore extends Fragment {
     private View view;
     GridView gridView;
     String title, search_id;
-
+    //String image;
     Button login_button;
     Button logout_button;
     @Nullable
@@ -76,7 +76,7 @@ public class FragmentMore extends Fragment {
                     for (DataSnapshot i : dataSnapshot.getChildren()) {
                         title = "";
                         search_id = i.getValue().toString();
-                        if (search_id.length() > 0){
+                        if (search_id.length() > 0){ //20201029
                             int l = -1, j = 0;
                             do {
                                 l = search_id.indexOf("email", l+1);
@@ -84,7 +84,7 @@ public class FragmentMore extends Fragment {
                                 if (l != -1)
                                 {
                                     e = search_id.indexOf('}', l);
-                                    if (FirebaseAuth.getInstance().getCurrentUser().getEmail().equals(search_id.substring(l+6, e)))
+                                    if (FirebaseAuth.getInstance().getCurrentUser().getEmail().equals(search_id.substring(l+6, e))) //자신이 속한 그룹과 정보가 같을 때
                                     {
 
                                     }
@@ -107,6 +107,7 @@ public class FragmentMore extends Fragment {
             GroupListAdapter adapter = new GroupListAdapter();
 
             adapter.addItem(new GroupListItem("추가하기",1,""));
+
 
             gridView.setAdapter(adapter);
         }

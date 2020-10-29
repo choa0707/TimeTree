@@ -15,7 +15,9 @@ import java.util.ArrayList;
 
 public class GroupListAdapter extends BaseAdapter{
 
-    ArrayList<GroupListItem> items = new ArrayList<>();
+    //OnItemClick mCallback; -> onItemClick을 콜백시켜준다. OnItemClick은 인터페이스스
+
+   ArrayList<GroupListItem> items = new ArrayList<>();
     Context context;
 
     @Override
@@ -62,9 +64,9 @@ public class GroupListAdapter extends BaseAdapter{
             {
                 TextView title = view.findViewById(R.id.group_title);
                 title.setText(groupListItem.getTitle());
-                //
 
-                //
+                //20201929 , 이미지 뷰를 셋팅하고 FirebbaseStrage를 가져온다.
+
             }
             gridlayout.getLayoutParams().height = 500;
 

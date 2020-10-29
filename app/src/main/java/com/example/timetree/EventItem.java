@@ -2,7 +2,7 @@ package com.example.timetree;
 
 import java.util.List;
 
-public class EventItem {
+public class EventItem { //캘린더 이벤트를 설정해주는 클래스
     String title;
     int category;
     int color;

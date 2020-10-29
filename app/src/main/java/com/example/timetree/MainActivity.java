@@ -71,13 +71,15 @@ public class MainActivity extends AppCompatActivity {
         {
             nav_name.setText("로그인을 해주세요");
             nav_email.setText("");
+
+            //로그인이 되어있으면 navi_menu를 로그아웃이 되어있으면 navi_manu를 / 메인엑티비티에서도 만들어준다.
         }
 
 
             navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-
+                    // 아이템이 선택되었을때 실행되는 코딩
 
                     switch(menuItem.getItemId())
                     {
