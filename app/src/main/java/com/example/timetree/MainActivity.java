@@ -16,11 +16,17 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import org.w3c.dom.Text;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -31,6 +37,9 @@ public class MainActivity extends AppCompatActivity {
     private FragmentMore fragmentMore = new FragmentMore();
     private FragmentFeed fragmentFeed = new FragmentFeed();
     private DrawerLayout drawerLayout;
+    private TextView nav_name;
+    private TextView nav_email;
+    private FirebaseAuth auth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,30 +52,57 @@ public class MainActivity extends AppCompatActivity {
         actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeAsUpIndicator(R.drawable.ic_baseline_more_horiz_24);
+        auth = FirebaseAuth.getInstance(); //인스턴스를 받아옴
 
         drawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
 
         NavigationView navigationView = (NavigationView)findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                switch(menuItem.getItemId())
-                {
-                    case R.id.account:
-                        Toast.makeText(getApplicationContext(), "계정", Toast.LENGTH_SHORT).show();
-                        break;
-                    case R.id.setting:
-                        Toast.makeText(getApplicationContext(), "설정", Toast.LENGTH_SHORT).show();
-                        break;
-                    case R.id.logout:
-                        FirebaseAuth.getInstance().signOut();
-                        Toast.makeText(getApplicationContext(), "로그아웃 되었습니다.",Toast.LENGTH_SHORT).show();
-                        onResume();
-                        break;
+        View view = navigationView.getHeaderView(0);
+
+        nav_name = (TextView)view.findViewById(R.id.nav_name);
+        nav_email = (TextView)view.findViewById(R.id.nav_email);
+
+        if (auth.getCurrentUser()!=null)
+        {
+            nav_name.setText("DalTree");
+            nav_email.setText(auth.getCurrentUser().getEmail());
+
+        } else
+        {
+            nav_name.setText("로그인을 해주세요");
+            nav_email.setText("");
+        }
+
+
+            navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+
+
+                    switch(menuItem.getItemId())
+                    {
+                        case R.id.account:
+                            Toast.makeText(getApplicationContext(), "계정", Toast.LENGTH_SHORT).show();
+                            break;
+                        case R.id.setting:
+                            Toast.makeText(getApplicationContext(), "설정", Toast.LENGTH_SHORT).show();
+                            break;
+                        case R.id.logout:
+                            FirebaseAuth.getInstance().signOut();
+                            Toast.makeText(getApplicationContext(), "로그아웃 되었습니다.",Toast.LENGTH_SHORT).show();
+                            onResume();
+                            finish();
+                            break;
+
+                            //로그아웃 버튼을 눌렀는데 네비게이션바 상단에 변화가 없습니다.
+                    }
+
+                    return true;
                 }
-                return true;
-            }
-        });
+            });
+
+
+
 
 
         FragmentTransaction transaction = fragmentManager.beginTransaction();
@@ -108,5 +144,7 @@ public class MainActivity extends AppCompatActivity {
             }
             return true;
         }
+
+
     }
 }

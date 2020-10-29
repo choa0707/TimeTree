@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -49,6 +50,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     Button login_button;
     EditText loginid_text;
     EditText loginpw_text;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,17 +116,28 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         }
     }
 
+
         @Override
         public void onStart () {
             super.onStart();
 
             FirebaseUser currentUser = mAuth.getCurrentUser();
+            if(currentUser!=null){
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
+                finish();
+
+//                super.onStart();
+//                mAuth.addAuthStateListener()
+                // mAuthListener가 저희 구현에는 없는데 다음단계를 실행하도록 하는거는 어떻게 해야할까요??  --> 참고 https://nittaku.tistory.com/17
+
+            }
         }
 
         public void createAccount (String email, String password){
             mAuth.signInWithEmailAndPassword(email, password)
                     .
-
+                //사용자가 앱에 로그인하면 다음과 같이 사용자의 이메일 주소와 비밀번호를 signInWithEamilAndPassword에 전달합니다.
                             addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
@@ -134,6 +147,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                                         FirebaseUser user = mAuth.getCurrentUser();
                                         Toast.makeText(getApplicationContext(), "로그인 되었습니다..",
                                                 Toast.LENGTH_SHORT).show();
+                                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                        startActivity(intent);
                                         finish();
                                         ;
                                     } else {
@@ -159,7 +174,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                             // Sign in success, update UI with the signed-in user's information
                             Log.d("FirebaseLogin", "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-
 
 
 
