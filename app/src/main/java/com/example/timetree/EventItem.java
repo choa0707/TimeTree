@@ -2,11 +2,11 @@ package com.example.timetree;
 
 import java.util.List;
 
-public class EventItem { //캘린더 이벤트를 설정해주는 클래스
-    String title;
-    int category;
-    int color;
-    int alarm;
+public class EventItem {
+    String title="";
+    int category=0;
+    int color=0;
+    int alarm=0;
     int start_year, start_month, start_day, start_hour,start_minute;
     int end_year, end_month, end_day, end_hour,end_minute;
 
