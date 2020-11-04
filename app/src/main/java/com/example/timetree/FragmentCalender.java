@@ -49,10 +49,15 @@ public class FragmentCalender extends Fragment {
         List<EventDay> events = new ArrayList<>();
         String uid = FirebaseAuth.getInstance().getUid();
         CalendarView calendarView = (CalendarView) view.findViewById(R.id.calendarView);
+
         if (uid != null) {
             FirebaseDatabase database = FirebaseDatabase.getInstance();
-
-            DatabaseReference myRef = database.getReference().child("users").child(uid).child("events");
+            DatabaseReference myRef;
+            if (!MyGlobals.getInstance().getmGlobalString().equals(""))
+            {
+                myRef = database.getReference().child("Groups").child(MyGlobals.getInstance().getmGlobalString()).child("events");
+            }
+            else {myRef = database.getReference().child("users").child(uid).child("events");}
 
             myRef.addValueEventListener(new ValueEventListener() {
                 @Override
@@ -113,8 +118,6 @@ public class FragmentCalender extends Fragment {
                 Toast.makeText(getActivity(), eventDay.getCalendar().getTime().toString(), Toast.LENGTH_LONG).show();
             }
         });
-
-
         return view;
     }
 

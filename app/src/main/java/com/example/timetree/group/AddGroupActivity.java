@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.timetree.EventItem;
 import com.example.timetree.R;
 import com.example.timetree.RecyclerAdapter;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -103,12 +104,20 @@ public class AddGroupActivity extends AppCompatActivity {
                         GroupMember groupMember = new GroupMember(recyclerAdapter.getItem(i));
                         groupMemberRef.push().setValue(groupMember);
                     }
+                    //////TODO: 일정추가
+                    EventItem eventItem = new EventItem();
+                    long now = System.currentTimeMillis();
+                    Date date = new Date(now);
+                    String eid = date.toString();
+                    DatabaseReference eventsRef = newGroupRef.child("events");
+                    eventsRef.child(eid).setValue(eventItem);
+                    ///////////////////////////////////////
+
                     GroupMember groupMember = new GroupMember(FirebaseAuth.getInstance().getCurrentUser().getEmail());
                     groupMemberRef.push().setValue(groupMember);
                     Toast.makeText(getApplicationContext(), "등록이 완료되었습니다.", Toast.LENGTH_LONG).show();
-
+                    finish();
                 }
-
             }
         });
         searchButton.setOnClickListener(new View.OnClickListener(){
@@ -242,5 +251,3 @@ public class AddGroupActivity extends AppCompatActivity {
         finish();
     }
 }
-
-

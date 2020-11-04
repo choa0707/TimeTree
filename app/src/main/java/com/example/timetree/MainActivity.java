@@ -6,21 +6,25 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.timetree.group.FragmentMore;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity {
 
     Toolbar toolbar;
     private FragmentManager fragmentManager = getSupportFragmentManager();
@@ -29,6 +33,9 @@ public class MainActivity extends AppCompatActivity{
     private FragmentMore fragmentMore = new FragmentMore();
     private FragmentFeed fragmentFeed = new FragmentFeed();
     private DrawerLayout drawerLayout;
+    private TextView nav_name;
+    private TextView nav_email;
+    private FirebaseAuth auth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,29 +49,69 @@ public class MainActivity extends AppCompatActivity{
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeAsUpIndicator(R.drawable.ic_baseline_more_horiz_24);
 
+
         drawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
 
         NavigationView navigationView = (NavigationView)findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                switch(menuItem.getItemId())
-                {
-                    case R.id.account:
-                        Toast.makeText(getApplicationContext(), "계정", Toast.LENGTH_SHORT).show();
-                        break;
-                    case R.id.setting:
-                        Toast.makeText(getApplicationContext(), "설정", Toast.LENGTH_SHORT).show();
-                        break;
-                    case R.id.logout:
-                        FirebaseAuth.getInstance().signOut();
-                        Toast.makeText(getApplicationContext(), "로그아웃 되었습니다.",Toast.LENGTH_SHORT).show();
-                        onResume();
-                        break;
+
+        View view = navigationView.getHeaderView(0);
+
+        nav_name = (TextView)view.findViewById(R.id.nav_name);
+        nav_email = (TextView)view.findViewById(R.id.nav_email);
+
+        auth = FirebaseAuth.getInstance(); //인스턴스를 받아옴
+
+        if (auth.getCurrentUser()!=null)
+        {
+            nav_name.setText("DalTree");
+            nav_email.setText(auth.getCurrentUser().getEmail());
+
+        }
+        else
+        {
+            nav_name.setText("로그인을 해주세요");
+            nav_email.setText("");
+
+        }
+
+
+            navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+
+
+                    switch(menuItem.getItemId())
+                    {
+                        case R.id.mycalendar:
+                            Toast.makeText(getApplicationContext(), "내 일정을 불러옵니다.", Toast.LENGTH_SHORT).show();
+                            MyGlobals.getInstance().setmGlobalString("");
+                            onRestart();
+                            //replaceFragement();
+                            break;
+                        case R.id.account:
+                            Toast.makeText(getApplicationContext(), "계정", Toast.LENGTH_SHORT).show();
+                            break;
+                        case R.id.setting:
+                            Toast.makeText(getApplicationContext(), "설정", Toast.LENGTH_SHORT).show();
+                            break;
+                        case R.id.logout:
+                            FirebaseAuth.getInstance().signOut();
+                            auth = null;
+                            Toast.makeText(getApplicationContext(), "로그아웃 되었습니다.",Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(getApplicationContext(), SplashActivity.class);
+                            startActivity(intent);
+                            finish();
+                            break;
+
+                            //로그아웃 버튼을 눌렀는데 네비게이션바 상단에 변화가 없습니다.
+                    }
+
+                    return true;
                 }
-                return true;
-            }
-        });
+            });
+
+
+
 
 
         FragmentTransaction transaction = fragmentManager.beginTransaction();
@@ -72,7 +119,11 @@ public class MainActivity extends AppCompatActivity{
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavi);
         bottomNavigationView.setOnNavigationItemSelectedListener(new ItemSelectedListener());
     }
-
+    public void replaceFragement(){
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.Main_Frame, fragmentCalender).commitAllowingStateLoss();
+    }
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
@@ -83,14 +134,7 @@ public class MainActivity extends AppCompatActivity{
         }
         return super.onOptionsItemSelected(item);
     }
-
-    public void replaceFragment() {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.Main_Frame, fragmentCalender).commit();      // Fragment로 사용할 MainActivity내의 layout공간을 선택합니다.
-    }
-
-
+    ///하단 네비게이션
     class ItemSelectedListener implements BottomNavigationView.OnNavigationItemSelectedListener{
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -113,5 +157,12 @@ public class MainActivity extends AppCompatActivity{
             }
             return true;
         }
+
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 }

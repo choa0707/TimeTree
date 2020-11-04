@@ -1,11 +1,12 @@
 package com.example.timetree.group;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -15,28 +16,21 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.bumptech.glide.Glide;
-import com.example.timetree.MainActivity;
+import com.example.timetree.MyGlobals;
 import com.example.timetree.OnItemClick;
 import com.example.timetree.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
-public class GroupListAdapter extends BaseAdapter {
+public class GroupListAdapter extends BaseAdapter{
     private OnItemClick mCallback;
-    GroupListAdapter(OnItemClick listener)
-    {
-        this.mCallback = listener;
-    }
-
+    GroupListAdapter(OnItemClick lisntener) {this.mCallback = lisntener;}
 
     ArrayList<GroupListItem> items = new ArrayList<>();
     Context context;
@@ -87,36 +81,49 @@ public class GroupListAdapter extends BaseAdapter {
                 title.setText(groupListItem.getTitle());
                 ImageView imageView = view.findViewById(R.id.group_image);
                 FirebaseStorage storage = FirebaseStorage.getInstance("gs://daltree-d7366.appspot.com/");
-                StorageReference storageRef = storage.getReference();
-                Log.d("DB", items.get(i).getImage_url());
-                storageRef.child("images/"+items.get(i).getImage_url()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                StorageReference storageReference = storage.getReference();
+                storageReference.child("images/"+items.get(i).getImage_url()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri uri) {
-                        //이미지 로드 성공시
-
-                        Glide.with(context)
-                                .load(uri)
-                                .into(imageView);
-
+                        Glide.with(context).load(uri).into(imageView);
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
-                    public void onFailure(@NonNull Exception exception) {
-                        //이미지 로드 실패시
-                        Toast.makeText(context, "실패", Toast.LENGTH_SHORT).show();
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(context, "이미지 로드 실패", Toast.LENGTH_LONG).show();
                     }
                 });
-                //
                 imageView.setOnClickListener(new View.OnClickListener(){
 
                     @Override
-                    public void onClick(View v) {
-                        Toast.makeText(context, groupListItem.getTitle()+"그룹 일정을 불러옵니다.", Toast.LENGTH_LONG).show();
+                    public void onClick(View view) {
+                        Toast.makeText(context, groupListItem.getTitle()+"그룹 일정을 볼러옵니다.", Toast.LENGTH_LONG).show();
+                        MyGlobals.getInstance().setmGlobalString(groupListItem.getKey());
                         mCallback.onClick();
-
                     }
                 });
-                //
+                imageView.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View view) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                        builder.setTitle("그룹 탈퇴").setMessage("그룹을 탈퇴 하시겠습니까?");
+                        builder.setPositiveButton("예", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                Toast.makeText(context, "그룹을 삭제 되었습니다.", Toast.LENGTH_LONG).show();
+
+                            }
+                        });
+                        builder.setNegativeButton("아니오", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                            }
+                        });
+                        builder.show();
+                        return true;
+                    }
+                });
             }
             gridlayout.getLayoutParams().height = 500;
 
