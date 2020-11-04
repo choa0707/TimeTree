@@ -1,4 +1,4 @@
-package com.example.timetree;
+package com.example.timetree.group;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,6 +16,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.timetree.R;
+import com.example.timetree.RecyclerAdapter;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -241,18 +243,4 @@ public class AddGroupActivity extends AppCompatActivity {
     }
 }
 
-class GroupMember{
-    public String email;
-    public GroupMember(String email) {
-        this.email = email;
-    }
-}
-class GroupInfo{
-    public String name;
-    public String image;
 
-    public GroupInfo(String name, String image) {
-        this.name = name;
-        this.image = image;
-    }
-}

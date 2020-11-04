@@ -1,17 +1,20 @@
-package com.example.timetree;
+package com.example.timetree.group;
 
 class GroupListItem {
     String title;
     int add = 0;
-    String group_id;
+    String image_url;
 
-    public GroupListItem(String title, int add, String group_id) {
+    public GroupListItem() {
+    }
+
+    public GroupListItem(String title, int add, String image_url) {
         this.title = title;
         this.add = add;
-        this.group_id = group_id;
+        this.image_url = image_url;
     }
-    public String getGroup_id() {
-        return group_id;
+    public String getImage_url() {
+        return image_url;
     }
     public String getTitle() {
         return title;

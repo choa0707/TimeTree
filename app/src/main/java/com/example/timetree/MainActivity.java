@@ -10,19 +10,17 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.timetree.group.FragmentMore;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity{
 
     Toolbar toolbar;
     private FragmentManager fragmentManager = getSupportFragmentManager();
@@ -85,6 +83,13 @@ public class MainActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    public void replaceFragment() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.Main_Frame, fragmentCalender).commit();      // Fragment로 사용할 MainActivity내의 layout공간을 선택합니다.
+    }
+
 
     class ItemSelectedListener implements BottomNavigationView.OnNavigationItemSelectedListener{
         @Override
