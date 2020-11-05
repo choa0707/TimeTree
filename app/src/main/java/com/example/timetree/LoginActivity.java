@@ -109,12 +109,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 GoogleSignInAccount account = result.getSignInAccount();
                 Log.d("FirebaseLogin", "Account=" + account);
                 firebaseAuthWithGoogle(account);
-                //TODO:로그인 할때 이메일 전역에 저장
-                if (FirebaseAuth.getInstance().getCurrentUser().getEmail() != null)
-                {
-                    MyGlobals.getInstance().setUserEmail(FirebaseAuth.getInstance().getCurrentUser().getEmail());
-                }
-                /////
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(intent);
                 finish();
@@ -155,12 +149,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                                         FirebaseUser user = mAuth.getCurrentUser();
                                         Toast.makeText(getApplicationContext(), "로그인 되었습니다.",
                                                 Toast.LENGTH_SHORT).show();
-                                        //TODO:로그인 할때 이메일 전역에 저장
-                                        if (FirebaseAuth.getInstance().getCurrentUser().getEmail() != null)
-                                        {
-                                            MyGlobals.getInstance().setUserEmail(FirebaseAuth.getInstance().getCurrentUser().getEmail());
-                                        }
-                                        /////
+
                                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                         startActivity(intent);
                                         finish();

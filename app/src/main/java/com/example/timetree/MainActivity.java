@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeAsUpIndicator(R.drawable.ic_baseline_more_horiz_24);
 
-        MyGlobals.getInstance().setUserEmail(FirebaseAuth.getInstance().getCurrentUser().getEmail());
+
         drawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
 
         NavigationView navigationView = (NavigationView)findViewById(R.id.nav_view);
