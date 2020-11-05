@@ -118,9 +118,8 @@ public class FragmentCalender extends Fragment {
                 int month = clickedDayCalendar.get(Calendar.MONTH);
                 int day = clickedDayCalendar.get(Calendar.DAY_OF_MONTH);
 
-
                 Intent intent = new Intent(getContext(), EventListActivity.class);
-                
+
                 startActivity(intent);
 
             }

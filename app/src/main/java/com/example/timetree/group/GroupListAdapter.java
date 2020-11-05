@@ -131,6 +131,10 @@ public class GroupListAdapter extends BaseAdapter{
                                             if (groupUserEmail.getEmail().equals(FirebaseAuth.getInstance().getCurrentUser().getEmail()))
                                             {
                                                 ref1.child(i.getKey()).removeValue();
+                                                if (i.getKey().equals(MyGlobals.getInstance().getgroupKey()))
+                                                {
+                                                    MyGlobals.getInstance().setgroupKey("");
+                                                }
                                                 Toast.makeText(context, "그룹을 삭제 되었습니다.", Toast.LENGTH_LONG).show();
                                             }
                                         }
