@@ -171,7 +171,7 @@ public class EventAdd extends AppCompatActivity {
 
                 TimePickerDialog timePickerDialog= new TimePickerDialog(EventAdd.this, android.R.style.Theme_Holo_Light_Dialog_NoActionBar,listner3, nowdate4, nowdate5, false);
                 timePickerDialog.show();
-                DatePickerDialog dialog = new DatePickerDialog(EventAdd.this, listener1, nowdate1, nowdate2, nowdate3);
+                DatePickerDialog dialog = new DatePickerDialog(EventAdd.this, listener1, nowdate1, nowdate2-1, nowdate3);
                 dialog.show();
 
 
@@ -185,7 +185,7 @@ public class EventAdd extends AppCompatActivity {
 
                 TimePickerDialog timePickerDialog= new TimePickerDialog(EventAdd.this, android.R.style.Theme_Holo_Light_Dialog_NoActionBar,listner4,nowdate4, nowdate5, false);
                 timePickerDialog.show();
-                DatePickerDialog dialog = new DatePickerDialog(EventAdd.this, listener2,  nowdate1, nowdate2, nowdate3);
+                DatePickerDialog dialog = new DatePickerDialog(EventAdd.this, listener2,  nowdate1, nowdate2-1, nowdate3);
                 dialog.show();
 
             }

@@ -110,6 +110,7 @@ public class GroupListAdapter extends BaseAdapter{
                         builder.setPositiveButton("예", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
+
                                 Toast.makeText(context, "그룹을 삭제 되었습니다.", Toast.LENGTH_LONG).show();
 
                             }
