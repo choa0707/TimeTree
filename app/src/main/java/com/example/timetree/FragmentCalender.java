@@ -53,9 +53,9 @@ public class FragmentCalender extends Fragment {
         if (uid != null) {
             FirebaseDatabase database = FirebaseDatabase.getInstance();
             DatabaseReference myRef;
-            if (!MyGlobals.getInstance().getmGlobalString().equals(""))
+            if (!MyGlobals.getInstance().getgroupKey().equals(""))
             {
-                myRef = database.getReference().child("Groups").child(MyGlobals.getInstance().getmGlobalString()).child("events");
+                myRef = database.getReference().child("Groups").child(MyGlobals.getInstance().getgroupKey()).child("events");
             }
             else {myRef = database.getReference().child("users").child(uid).child("events");}
 
@@ -115,6 +115,8 @@ public class FragmentCalender extends Fragment {
             @Override
             public void onDayClick(EventDay eventDay) {
                 Calendar clickedDayCalendar = eventDay.getCalendar();
+                Intent intent = new Intent(getActivity(), EventListActivity.class);
+                startActivity(intent);
                 Toast.makeText(getActivity(), eventDay.getCalendar().getTime().toString(), Toast.LENGTH_LONG).show();
             }
         });

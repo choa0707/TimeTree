@@ -23,6 +23,12 @@ import com.example.timetree.OnItemClick;
 import com.example.timetree.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -98,7 +104,7 @@ public class GroupListAdapter extends BaseAdapter{
                     @Override
                     public void onClick(View view) {
                         Toast.makeText(context, groupListItem.getTitle()+"그룹 일정을 볼러옵니다.", Toast.LENGTH_LONG).show();
-                        MyGlobals.getInstance().setmGlobalString(groupListItem.getKey());
+                        MyGlobals.getInstance().setgroupKey(groupListItem.getKey());
                         mCallback.onClick();
                     }
                 });
@@ -110,6 +116,37 @@ public class GroupListAdapter extends BaseAdapter{
                         builder.setPositiveButton("예", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
+
+                                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                                DatabaseReference ref1 = database.getReference().child("Groups").child(groupListItem.getKey()).child("members");
+
+                                ref1.addValueEventListener(new ValueEventListener() {
+
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        // This method is called once with the initial value and again
+                                        // whenever data at this location is updated.
+
+                                        for (DataSnapshot i : dataSnapshot.getChildren()) {
+                                            GroupUserEmail groupUserEmail = i.getValue(GroupUserEmail.class);
+                                            Log.i("test", groupUserEmail.getEmail()+"??"+(MyGlobals.getInstance().getUserEmail()));
+                                            if (groupUserEmail.getEmail().equals(MyGlobals.getInstance().getUserEmail()))
+                                            {
+                                                Log.i("test", groupUserEmail.getEmail()+"??"+(MyGlobals.getInstance().getUserEmail()));
+                                                ref1.child(i.getKey()).removeValue();
+                                            }
+                                        }
+
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+
+                                    }
+                                });
+
+
+                                //FirebaseDatabase.getInstance().getReference().
                                 Toast.makeText(context, "그룹을 삭제 되었습니다.", Toast.LENGTH_LONG).show();
 
                             }
@@ -132,5 +169,15 @@ public class GroupListAdapter extends BaseAdapter{
     public void addItem(GroupListItem item)
     {
         items.add(item);
+    }
+}
+class GroupUserEmail{
+    String email;
+
+    public String getEmail() {
+        return email;
+    }
+
+    public GroupUserEmail() {
     }
 }
