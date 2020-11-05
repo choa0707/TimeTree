@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -19,11 +20,16 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.applandeo.materialcalendarview.builders.DatePickerBuilder;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.SimpleDateFormat;
+import java.time.Month;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Map;
 
 public class EventAdd extends AppCompatActivity {
@@ -43,27 +49,32 @@ public class EventAdd extends AppCompatActivity {
     private DatePickerDialog.OnDateSetListener listener1 = new DatePickerDialog.OnDateSetListener() {
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-            eventItem.setStart_date(year, monthOfYear+1, dayOfMonth);
+
+            eventItem.setStart_date(year, monthOfYear, dayOfMonth);
+
         }
     };
     private DatePickerDialog.OnDateSetListener listener2 = new DatePickerDialog.OnDateSetListener() {
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-            eventItem.setEnd_date(year, monthOfYear+1, dayOfMonth);
+            eventItem.setEnd_date(year, monthOfYear, dayOfMonth);
         }
     };
     private TimePickerDialog.OnTimeSetListener listner3 = new TimePickerDialog.OnTimeSetListener() {
         @Override
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
             eventItem.setStart_time(hourOfDay, minute);
-            front_date.setText(eventItem.getStart_year()+"년 "+eventItem.getStart_month()+"월 "+eventItem.getStart_day()+"일 / " +eventItem.getStart_hour()+"시 "+eventItem.getStart_minute()+"분");
+
+            //20201104 - 날짜 선택 제한을 두는 방법
+
+            front_date.setText(eventItem.getStart_year()+"년 "+eventItem.getStart_month()+"월 "+eventItem.getStart_day()+"일  " +eventItem.getStart_hour()+"시 "+eventItem.getStart_minute()+"분");
         }
     };
     private TimePickerDialog.OnTimeSetListener listner4 = new TimePickerDialog.OnTimeSetListener() {
         @Override
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
             eventItem.setEnd_time(hourOfDay, minute);
-            back_date.setText(eventItem.getEnd_year()+"년 "+eventItem.getEnd_month()+"월 "+eventItem.getEnd_day()+"일 / " +eventItem.getEnd_hour()+"시 "+eventItem.getEnd_minute()+"분");
+            back_date.setText(eventItem.getEnd_year()+"년 "+eventItem.getEnd_month()+"월 "+eventItem.getEnd_day()+"일  " +eventItem.getEnd_hour()+"시 "+eventItem.getEnd_minute()+"분");
         }
     };
 
@@ -83,7 +94,35 @@ public class EventAdd extends AppCompatActivity {
         color = findViewById(R.id.Color_Btn);
         alarm = findViewById(R.id.alarm);
         title = findViewById(R.id.add_title);
+        long now = System.currentTimeMillis();
 
+        Date currentTime = Calendar.getInstance().getTime();
+        SimpleDateFormat nowy = new SimpleDateFormat("yyyy", Locale.getDefault());
+        SimpleDateFormat nowm = new SimpleDateFormat("MM", Locale.getDefault());
+        SimpleDateFormat nowd = new SimpleDateFormat("dd", Locale.getDefault());
+        SimpleDateFormat nowh = new SimpleDateFormat("HH", Locale.getDefault());
+        SimpleDateFormat nowmin = new SimpleDateFormat("mm", Locale.getDefault());
+
+        String nowday1 = nowy.format(currentTime);
+        String nowday2 = nowm.format(currentTime);
+        String nowday3 = nowd.format(currentTime);
+        String nowday4 = nowh.format(currentTime);
+        String nowday5 = nowmin.format(currentTime);
+
+        int nowdate1 = Integer.parseInt(nowday1);
+        int nowdate2 = Integer.parseInt(nowday2);
+        int nowdate3 = Integer.parseInt(nowday3);
+        int nowdate4 = Integer.parseInt(nowday4);
+        int nowdate5 = Integer.parseInt(nowday5);
+
+        front_date.setText(nowdate1 +"년 "+ nowdate2 +"월 "+ nowdate3 + "일  " + nowdate4 +"시 "+ nowdate5 +"분");
+        back_date.setText(nowdate1 +"년 "+ nowdate2 +"월 "+ nowdate3 + "일  " + nowdate4 +"시 "+ nowdate5 +"분");
+
+        Log.v(nowday1, "년도");
+        Log.v(nowday2, "월");
+        Log.v(nowday3, "일");
+        Log.v(nowday4, "시");
+        Log.v(nowday5, "분");
 
         alarm.setPrompt("알람");
         alarm.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
@@ -128,10 +167,14 @@ public class EventAdd extends AppCompatActivity {
         start_date.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                TimePickerDialog timePickerDialog= new TimePickerDialog(EventAdd.this, android.R.style.Theme_Holo_Light_Dialog_NoActionBar,listner3, 0, 0, false);
+
+
+                TimePickerDialog timePickerDialog= new TimePickerDialog(EventAdd.this, android.R.style.Theme_Holo_Light_Dialog_NoActionBar,listner3, nowdate4, nowdate5, false);
                 timePickerDialog.show();
-                DatePickerDialog dialog = new DatePickerDialog(EventAdd.this, listener1, 2020, 9, 17);
+                DatePickerDialog dialog = new DatePickerDialog(EventAdd.this, listener1, nowdate1, nowdate2, nowdate3);
                 dialog.show();
+
+
 
             }
         });
@@ -139,9 +182,10 @@ public class EventAdd extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                TimePickerDialog timePickerDialog= new TimePickerDialog(EventAdd.this, android.R.style.Theme_Holo_Light_Dialog_NoActionBar,listner4,0, 0, false);
+
+                TimePickerDialog timePickerDialog= new TimePickerDialog(EventAdd.this, android.R.style.Theme_Holo_Light_Dialog_NoActionBar,listner4,nowdate4, nowdate5, false);
                 timePickerDialog.show();
-                DatePickerDialog dialog = new DatePickerDialog(EventAdd.this, listener2, 2020, 9, 17);
+                DatePickerDialog dialog = new DatePickerDialog(EventAdd.this, listener2,  nowdate1, nowdate2, nowdate3);
                 dialog.show();
 
             }
