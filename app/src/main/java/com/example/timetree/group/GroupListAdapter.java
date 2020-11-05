@@ -23,6 +23,12 @@ import com.example.timetree.OnItemClick;
 import com.example.timetree.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -33,7 +39,9 @@ public class GroupListAdapter extends BaseAdapter{
     GroupListAdapter(OnItemClick lisntener) {this.mCallback = lisntener;}
 
     ArrayList<GroupListItem> items = new ArrayList<>();
+
     Context context;
+
 
     @Override
     public int getCount() {
@@ -98,7 +106,7 @@ public class GroupListAdapter extends BaseAdapter{
                     @Override
                     public void onClick(View view) {
                         Toast.makeText(context, groupListItem.getTitle()+"그룹 일정을 볼러옵니다.", Toast.LENGTH_LONG).show();
-                        MyGlobals.getInstance().setmGlobalString(groupListItem.getKey());
+                        MyGlobals.getInstance().setgroupKey(groupListItem.getKey());
                         mCallback.onClick();
                     }
                 });
@@ -110,7 +118,32 @@ public class GroupListAdapter extends BaseAdapter{
                         builder.setPositiveButton("예", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                Toast.makeText(context, "그룹을 삭제 되었습니다.", Toast.LENGTH_LONG).show();
+
+                                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                                DatabaseReference ref1 = database.getReference().child("Groups").child(groupListItem.getKey()).child("members");
+
+                                ref1.addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        for (DataSnapshot i : snapshot.getChildren())
+                                        {
+                                            GroupUserEmail groupUserEmail = i.getValue(GroupUserEmail.class);
+                                            if (groupUserEmail.getEmail().equals(FirebaseAuth.getInstance().getCurrentUser().getEmail()))
+                                            {
+                                                ref1.child(i.getKey()).removeValue();
+                                                Toast.makeText(context, "그룹을 삭제 되었습니다.", Toast.LENGTH_LONG).show();
+                                            }
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+
+                                    }
+                                });
+
+
+
 
                             }
                         });
@@ -132,5 +165,17 @@ public class GroupListAdapter extends BaseAdapter{
     public void addItem(GroupListItem item)
     {
         items.add(item);
+    }
+    public void clear() {
+        items.clear();
+    }
+}
+class GroupUserEmail{
+    String email;
+    public GroupUserEmail(){
+
+    }
+    public String getEmail() {
+        return email;
     }
 }

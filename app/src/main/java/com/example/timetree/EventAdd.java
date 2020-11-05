@@ -24,6 +24,7 @@ import com.applandeo.materialcalendarview.builders.DatePickerBuilder;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ServerValue;
 
 import java.text.SimpleDateFormat;
 import java.time.Month;
@@ -94,7 +95,6 @@ public class EventAdd extends AppCompatActivity {
         color = findViewById(R.id.Color_Btn);
         alarm = findViewById(R.id.alarm);
         title = findViewById(R.id.add_title);
-        long now = System.currentTimeMillis();
 
         Date currentTime = Calendar.getInstance().getTime();
         SimpleDateFormat nowy = new SimpleDateFormat("yyyy", Locale.getDefault());
@@ -171,7 +171,7 @@ public class EventAdd extends AppCompatActivity {
 
                 TimePickerDialog timePickerDialog= new TimePickerDialog(EventAdd.this, android.R.style.Theme_Holo_Light_Dialog_NoActionBar,listner3, nowdate4, nowdate5, false);
                 timePickerDialog.show();
-                DatePickerDialog dialog = new DatePickerDialog(EventAdd.this, listener1, nowdate1, nowdate2, nowdate3);
+                DatePickerDialog dialog = new DatePickerDialog(EventAdd.this, listener1, nowdate1, nowdate2-1, nowdate3);
                 dialog.show();
 
 
@@ -185,7 +185,7 @@ public class EventAdd extends AppCompatActivity {
 
                 TimePickerDialog timePickerDialog= new TimePickerDialog(EventAdd.this, android.R.style.Theme_Holo_Light_Dialog_NoActionBar,listner4,nowdate4, nowdate5, false);
                 timePickerDialog.show();
-                DatePickerDialog dialog = new DatePickerDialog(EventAdd.this, listener2,  nowdate1, nowdate2, nowdate3);
+                DatePickerDialog dialog = new DatePickerDialog(EventAdd.this, listener2,  nowdate1, nowdate2-1, nowdate3);
                 dialog.show();
 
             }
@@ -211,13 +211,13 @@ public class EventAdd extends AppCompatActivity {
                 String eid = date.toString();
                 String uid = FirebaseAuth.getInstance().getUid();
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
-                if (MyGlobals.getInstance().getmGlobalString().equals(""))
+                if (MyGlobals.getInstance().getgroupKey().equals(""))
                 {
                     database.getReference().child("users").child(uid).child("events").child(eid).setValue(eventItem);
                 }
                 else
                 {
-                    database.getReference().child("Groups").child(MyGlobals.getInstance().getmGlobalString()).child("events").child(eid).setValue(eventItem);
+                    database.getReference().child("Groups").child(MyGlobals.getInstance().getgroupKey()).child("events").child(eid).setValue(eventItem);
                 }
                 Toast.makeText(getApplicationContext(), "등록 되었습니다.", Toast.LENGTH_SHORT).show();
                 finish();
