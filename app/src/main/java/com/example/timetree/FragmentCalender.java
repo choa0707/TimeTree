@@ -52,9 +52,9 @@ public class FragmentCalender extends Fragment {
         if (uid != null) {
             FirebaseDatabase database = FirebaseDatabase.getInstance();
             DatabaseReference myRef;
-            if (!MyGlobals.getInstance().getmGlobalString().equals(""))
+            if (!MyGlobals.getInstance().getgroupKey().equals(""))
             {
-                myRef = database.getReference().child("Groups").child(MyGlobals.getInstance().getmGlobalString()).child("events");
+                myRef = database.getReference().child("Groups").child(MyGlobals.getInstance().getgroupKey()).child("events");
             }
             else {myRef = database.getReference().child("users").child(uid).child("events");}
 
@@ -105,16 +105,23 @@ public class FragmentCalender extends Fragment {
 
 
 
-        Calendar calendar2 = Calendar.getInstance();
-        calendar2.add(Calendar.DAY_OF_MONTH, 15);
-        events.add(new EventDay(calendar2, R.drawable.ic_baseline_event_24, Color.parseColor("#228B22")));
+//        Calendar calendar2 = Calendar.getInstance();
+//        calendar2.add(Calendar.DAY_OF_MONTH, 15);
+//        events.add(new EventDay(calendar2, R.drawable.ic_baseline_event_24, Color.parseColor("#228B22")));
 
 
         calendarView.setOnDayClickListener(new OnDayClickListener() {
             @Override
             public void onDayClick(EventDay eventDay) {
                 Calendar clickedDayCalendar = eventDay.getCalendar();
-                Toast.makeText(getActivity(), eventDay.getCalendar().getTime().toString(), Toast.LENGTH_LONG).show();
+                int year = clickedDayCalendar.get(Calendar.YEAR);
+                int month = clickedDayCalendar.get(Calendar.MONTH);
+                int day = clickedDayCalendar.get(Calendar.DAY_OF_MONTH);
+
+                Intent intent = new Intent(getContext(), EventListActivity.class);
+
+                startActivity(intent);
+
             }
         });
         return view;

@@ -1,13 +1,14 @@
 package com.example.timetree;
 
 public class MyGlobals {
-    private String mGlobalString="";
+    private String groupKey="";
 
-    public void setmGlobalString(String mGlobalString) {
-        this.mGlobalString = mGlobalString;
+
+    public void setgroupKey(String groupKey) {
+        this.groupKey = groupKey;
     }
-    public String getmGlobalString() {
-        return mGlobalString;
+    public String getgroupKey() {
+        return groupKey;
     }
     private static MyGlobals instance = null;
     public static synchronized MyGlobals getInstance(){
