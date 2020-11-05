@@ -45,7 +45,6 @@ public class FragmentCalender extends Fragment {
     {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_calendar, container, false);
-
         List<EventDay> events = new ArrayList<>();
         String uid = FirebaseAuth.getInstance().getUid();
         CalendarView calendarView = (CalendarView) view.findViewById(R.id.calendarView);
@@ -106,18 +105,23 @@ public class FragmentCalender extends Fragment {
 
 
 
-        Calendar calendar2 = Calendar.getInstance();
-        calendar2.add(Calendar.DAY_OF_MONTH, 15);
-        events.add(new EventDay(calendar2, R.drawable.ic_baseline_event_24, Color.parseColor("#228B22")));
+//        Calendar calendar2 = Calendar.getInstance();
+//        calendar2.add(Calendar.DAY_OF_MONTH, 15);
+//        events.add(new EventDay(calendar2, R.drawable.ic_baseline_event_24, Color.parseColor("#228B22")));
 
 
         calendarView.setOnDayClickListener(new OnDayClickListener() {
             @Override
             public void onDayClick(EventDay eventDay) {
                 Calendar clickedDayCalendar = eventDay.getCalendar();
-                Intent intent = new Intent(getActivity(), EventListActivity.class);
+                int year = clickedDayCalendar.get(Calendar.YEAR);
+                int month = clickedDayCalendar.get(Calendar.MONTH);
+                int day = clickedDayCalendar.get(Calendar.DAY_OF_MONTH);
+
+                Intent intent = new Intent(getContext(), EventListActivity.class);
+
                 startActivity(intent);
-                Toast.makeText(getActivity(), eventDay.getCalendar().getTime().toString(), Toast.LENGTH_LONG).show();
+
             }
         });
         return view;

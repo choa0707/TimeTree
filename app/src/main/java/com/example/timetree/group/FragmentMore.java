@@ -64,6 +64,7 @@ public class FragmentMore extends Fragment implements OnItemClick {
             myRef.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
+                    adapter.clear();
                     // This method is called once with the initial value and again
                     // whenever data at this location is updated.
 

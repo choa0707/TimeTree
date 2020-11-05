@@ -39,7 +39,9 @@ public class GroupListAdapter extends BaseAdapter{
     GroupListAdapter(OnItemClick lisntener) {this.mCallback = lisntener;}
 
     ArrayList<GroupListItem> items = new ArrayList<>();
+
     Context context;
+
 
     @Override
     public int getCount() {
@@ -121,22 +123,21 @@ public class GroupListAdapter extends BaseAdapter{
                                 DatabaseReference ref1 = database.getReference().child("Groups").child(groupListItem.getKey()).child("members");
 
                                 ref1.addValueEventListener(new ValueEventListener() {
-
                                     @Override
-                                    public void onDataChange(DataSnapshot dataSnapshot) {
-                                        // This method is called once with the initial value and again
-                                        // whenever data at this location is updated.
-
-                                        for (DataSnapshot i : dataSnapshot.getChildren()) {
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        for (DataSnapshot i : snapshot.getChildren())
+                                        {
                                             GroupUserEmail groupUserEmail = i.getValue(GroupUserEmail.class);
-                                            Log.i("test", groupUserEmail.getEmail()+"??"+(MyGlobals.getInstance().getUserEmail()));
-                                            if (groupUserEmail.getEmail().equals(MyGlobals.getInstance().getUserEmail()))
+                                            if (groupUserEmail.getEmail().equals(FirebaseAuth.getInstance().getCurrentUser().getEmail()))
                                             {
-                                                Log.i("test", groupUserEmail.getEmail()+"??"+(MyGlobals.getInstance().getUserEmail()));
                                                 ref1.child(i.getKey()).removeValue();
+                                                if (i.getKey().equals(MyGlobals.getInstance().getgroupKey()))
+                                                {
+                                                    MyGlobals.getInstance().setgroupKey("");
+                                                }
+                                                Toast.makeText(context, "그룹을 삭제 되었습니다.", Toast.LENGTH_LONG).show();
                                             }
                                         }
-
                                     }
 
                                     @Override
@@ -146,8 +147,7 @@ public class GroupListAdapter extends BaseAdapter{
                                 });
 
 
-                                //FirebaseDatabase.getInstance().getReference().
-                                Toast.makeText(context, "그룹을 삭제 되었습니다.", Toast.LENGTH_LONG).show();
+
 
                             }
                         });
@@ -170,14 +170,16 @@ public class GroupListAdapter extends BaseAdapter{
     {
         items.add(item);
     }
+    public void clear() {
+        items.clear();
+    }
 }
 class GroupUserEmail{
     String email;
+    public GroupUserEmail(){
 
+    }
     public String getEmail() {
         return email;
-    }
-
-    public GroupUserEmail() {
     }
 }
