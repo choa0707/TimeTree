@@ -5,8 +5,37 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:gravity="top"
     tools:context=".EventListActivity">
 
-    d
+    <TextView
+        android:id="@+id/event_list_month"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="28dp"
+        android:gravity="center"
+        android:text="11월"></TextView>
+
+    <TextView
+        android:id="@+id/event_list_day"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="17dp"
+        android:gravity="center"
+        android:text="5일 목요일"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ListView
+            android:id="@+id/event_list_view"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            ></ListView>
+
+    </LinearLayout>
+
+
 
 </LinearLayout>

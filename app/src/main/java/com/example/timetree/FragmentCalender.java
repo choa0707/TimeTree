@@ -105,11 +105,6 @@ public class FragmentCalender extends Fragment {
 
 
 
-//        Calendar calendar2 = Calendar.getInstance();
-//        calendar2.add(Calendar.DAY_OF_MONTH, 15);
-//        events.add(new EventDay(calendar2, R.drawable.ic_baseline_event_24, Color.parseColor("#228B22")));
-
-
         calendarView.setOnDayClickListener(new OnDayClickListener() {
             @Override
             public void onDayClick(EventDay eventDay) {
@@ -119,9 +114,10 @@ public class FragmentCalender extends Fragment {
                 int day = clickedDayCalendar.get(Calendar.DAY_OF_MONTH);
 
                 Intent intent = new Intent(getContext(), EventListActivity.class);
-
+                intent.putExtra("caly", year);
+                intent.putExtra("calm", month+1);
+                intent.putExtra("cald", day);
                 startActivity(intent);
-
             }
         });
         return view;

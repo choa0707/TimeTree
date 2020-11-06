@@ -36,4 +36,3 @@ class GroupListItem {
         this.title = title;
     }
 }
-
