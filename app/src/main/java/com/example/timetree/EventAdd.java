@@ -137,7 +137,7 @@ public class EventAdd extends AppCompatActivity {
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                eventItem.setCategory(0);
+                eventItem.setAlarm(0);
             }
         });
 
@@ -146,26 +146,26 @@ public class EventAdd extends AppCompatActivity {
 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                eventItem.setCategory(position);
+                eventItem.setColor(position);
                 Toast.makeText(getApplicationContext(), ""+parent.getItemAtPosition(position), Toast.LENGTH_LONG).show();
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                eventItem.setCategory(0);
+                eventItem.setColor(0);
             }
         });
 
-        //20201111 아이콘 컬러 에러
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getApplicationContext(), R.array.color, android.R.layout.simple_spinner_item);
-
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        color.setAdapter(adapter);
-
-        String strColor = color.getSelectedItem().toString();
-
-        Intent itcolor = new Intent(getApplicationContext(), MainActivity.class);
-        itcolor.putExtra("eventcolor", strColor);
-        startActivity(itcolor);
+//        //20201111 아이콘 컬러 에러
+//        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getApplicationContext(), R.array.color, android.R.layout.simple_spinner_item);
+//
+//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        color.setAdapter(adapter);
+//
+//        String strColor = color.getSelectedItem().toString();
+//
+//        Intent itcolor = new Intent(getApplicationContext(), MainActivity.class);
+//        itcolor.putExtra("eventcolor", strColor);
+//        startActivity(itcolor);
 
         category.setPrompt("카테고리");
         category.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){

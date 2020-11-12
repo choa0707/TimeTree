@@ -56,24 +56,6 @@ public class MainActivity extends AppCompatActivity {
 
         View view = navigationView.getHeaderView(0);
 
-        //20201111 EventAdd의 Intent 데이터 값을 받아옴
-
-        try {
-            Intent intent = getIntent();
-            String ic_color = intent.getStringExtra("eventcolor");
-
-            Bundle bundle = new Bundle();
-            bundle.putString("eventcolor",ic_color);
-            fragmentCalender.setArguments(bundle);
-
-            Log.d("color",ic_color);
-        }catch (Exception e)
-        {
-
-        }
-
-
-        //20201111
 
         nav_name = (TextView)view.findViewById(R.id.nav_name);
         nav_email = (TextView)view.findViewById(R.id.nav_email);
@@ -104,8 +86,9 @@ public class MainActivity extends AppCompatActivity {
                         case R.id.mycalendar:
                             Toast.makeText(getApplicationContext(), "내 일정을 불러옵니다.", Toast.LENGTH_SHORT).show();
                             MyGlobals.getInstance().setgroupKey("");
+                            drawerLayout.closeDrawers();
                             onRestart();
-                            //replaceFragement();
+
                             break;
                         case R.id.account:
                             Toast.makeText(getApplicationContext(), "계정", Toast.LENGTH_SHORT).show();

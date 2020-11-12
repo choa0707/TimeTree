@@ -39,7 +39,7 @@ import java.util.List;
 
 public class FragmentCalender extends Fragment {
     private View view;
-    int s_y, s_m, s_d, e_y,e_m,e_d;
+    int s_y, s_m, s_d, e_y,e_m,e_d, color;
     FloatingActionButton fab;
     ArrayList<EventItem> eventItems = new ArrayList<>();
     @Nullable
@@ -47,8 +47,8 @@ public class FragmentCalender extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState)
     {
-        Bundle bundle = getArguments();
-        String eventcolor = bundle.getString("eventcolor");
+
+        String eventcolor;
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_calendar, container, false);
         List<EventDay> events = new ArrayList<>();
@@ -74,6 +74,7 @@ public class FragmentCalender extends Fragment {
                         eventItems.add(i.getValue(EventItem.class));
 
                         EventItem eventItem = i.getValue(EventItem.class);
+                        color = eventItem.getColor();
                         s_y = eventItem.getStart_year();
                         s_m = eventItem.getStart_month();
                         s_d = eventItem.getStart_day();
@@ -90,16 +91,16 @@ public class FragmentCalender extends Fragment {
                             calendar1.set(s_y, s_m - 1, j);
 
 
-                            if (eventcolor.equals("빨강")){
+                            if (color == 0){
                                 events.add(new EventDay(calendar1,R.drawable.ic_baseline_star_rate_rad, Color.parseColor("#228B22")));
                                 calendarView.setEvents(events);
-                            }else if(eventcolor.equals("주황")){
+                            }else if(color == 1){
                                 events.add(new EventDay(calendar1,R.drawable.ic_baseline_star_rate_orange, Color.parseColor("#228B22")));
                                 calendarView.setEvents(events);
-                            }else if(eventcolor.equals("노랑")){
+                            }else if(color == 2){
                                 events.add(new EventDay(calendar1,R.drawable.ic_baseline_star_rate_yellow, Color.parseColor("#228B22")));
                                 calendarView.setEvents(events);
-                            }else if(eventcolor.equals("초록")){
+                            }else if(color == 3){
                                 events.add(new EventDay(calendar1, R.drawable.ic_baseline_star_rate_green, Color.parseColor("#228B22")));
                                 calendarView.setEvents(events);
                             }

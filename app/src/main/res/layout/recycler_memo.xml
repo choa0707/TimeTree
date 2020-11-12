@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <com.google.android.material.card.MaterialCardView
+        app:strokeWidth="1dp"
+        app:strokeColor="@color/colorAccent"
+
+        android:id="@+id/memo_card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="8"
+                android:orientation="vertical"
+                android:padding="16dp"
+                >
+                <TextView
+                    android:id="@+id/memo_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="24dp"
+                    android:text="title"
+                    />
+                <TextView
+                    android:id="@+id/memo_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="date"
+                    android:textSize="18dp"
+                    />
+                <TextView
+                    android:id="@+id/memo_detail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:textSize="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:text="밥밥밥"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="3"
+                android:layout_margin="8dp"
+                android:orientation="horizontal"
+                >
+                <Button
+                    android:layout_width="140dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/memo_edit"
+                    android:layout_marginEnd="16dp"
+                    android:text="수정">
+
+                </Button>
+                <Button
+                        android:layout_width="140dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/memo_delete"
+                    android:text="삭제">
+
+                </Button>
+
+            </LinearLayout>
+        </LinearLayout>
+
+
+    </com.google.android.material.card.MaterialCardView>
+</LinearLayout>
