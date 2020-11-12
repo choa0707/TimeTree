@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MemoAddActivity"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="20dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+            <ImageButton
+                android:id="@+id/memo_back_button"
+                android:layout_width="wrap_content"
+
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_arrow_left" />
+
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/memo_regist_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_baseline_done_24" />
+    </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:text="제목"
+        >
+    </TextView>
+    <EditText
+        android:id="@+id/memo_add_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:hint="제목을 입력해주세요."
+        ></EditText>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:textSize="20dp"
+        android:text="날짜"
+        >
+    </TextView>
+    <DatePicker
+        android:id="@+id/memo_add_datepicker"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:datePickerMode="spinner"
+        android:layout_marginBottom="20dp"
+        android:calendarViewShown="false">
+    </DatePicker>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:layout_marginBottom="20dp"
+        android:text="메모 내용"></TextView>
+    <EditText
+        android:id="@+id/memo_add_detail"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="내용"
+        android:layout_marginBottom="30dp"
+        android:textSize="12dp"
+        ></EditText>
+
+</LinearLayout>
