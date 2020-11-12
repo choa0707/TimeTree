@@ -1,15 +1,18 @@
 package com.example.timetree;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewDebug;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -51,14 +54,14 @@ public class EventAdd extends AppCompatActivity {
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
 
-            eventItem.setStart_date(year, monthOfYear, dayOfMonth);
+            eventItem.setStart_date(year, monthOfYear+1, dayOfMonth);
 
         }
     };
     private DatePickerDialog.OnDateSetListener listener2 = new DatePickerDialog.OnDateSetListener() {
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-            eventItem.setEnd_date(year, monthOfYear, dayOfMonth);
+            eventItem.setEnd_date(year, monthOfYear+1, dayOfMonth);
         }
     };
     private TimePickerDialog.OnTimeSetListener listner3 = new TimePickerDialog.OnTimeSetListener() {
@@ -151,6 +154,19 @@ public class EventAdd extends AppCompatActivity {
                 eventItem.setCategory(0);
             }
         });
+
+        //20201111 아이콘 컬러 에러
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getApplicationContext(), R.array.color, android.R.layout.simple_spinner_item);
+
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        color.setAdapter(adapter);
+
+        String strColor = color.getSelectedItem().toString();
+
+        Intent itcolor = new Intent(getApplicationContext(), MainActivity.class);
+        itcolor.putExtra("eventcolor", strColor);
+        startActivity(itcolor);
+
         category.setPrompt("카테고리");
         category.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
 

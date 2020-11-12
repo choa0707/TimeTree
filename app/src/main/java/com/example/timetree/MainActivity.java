@@ -56,6 +56,25 @@ public class MainActivity extends AppCompatActivity {
 
         View view = navigationView.getHeaderView(0);
 
+        //20201111 EventAdd의 Intent 데이터 값을 받아옴
+
+        try {
+            Intent intent = getIntent();
+            String ic_color = intent.getStringExtra("eventcolor");
+
+            Bundle bundle = new Bundle();
+            bundle.putString("eventcolor",ic_color);
+            fragmentCalender.setArguments(bundle);
+
+            Log.d("color",ic_color);
+        }catch (Exception e)
+        {
+
+        }
+
+
+        //20201111
+
         nav_name = (TextView)view.findViewById(R.id.nav_name);
         nav_email = (TextView)view.findViewById(R.id.nav_email);
 
@@ -109,8 +128,6 @@ public class MainActivity extends AppCompatActivity {
                     return true;
                 }
             });
-
-
 
 
 
