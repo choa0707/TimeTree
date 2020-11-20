@@ -9,10 +9,12 @@ import android.widget.GridView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class FragmentMemo extends Fragment {
     private View view;
-    GridView gridView;
+    RecyclerView recyclerView;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -21,16 +23,15 @@ public class FragmentMemo extends Fragment {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_memo, container, false);
 
-        gridView = view.findViewById(R.id.gridView);
-        GridListAdapter adapter = new GridListAdapter();
+        recyclerView = view.findViewById(R.id.memo_recyclerview);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        adapter.addItem(new GridViewListItem("점식식사", "2019-03-23"));
-        adapter.addItem(new GridViewListItem("피시방", "2019-03-30"));
-        adapter.addItem(new GridViewListItem("점식식사", "2019-03-23"));
-        adapter.addItem(new GridViewListItem("피시방", "2019-03-30"));
-        adapter.addItem(new GridViewListItem("점식식사", "2019-03-23"));
-        adapter.addItem(new GridViewListItem("피시방", "2019-03-30"));
-        gridView.setAdapter(adapter);
+        MemoRecyclerAdapter memoRecyclerAdapter = new MemoRecyclerAdapter();
+        MemoItem memoItem = new MemoItem("test", "est", "test");
+        memoRecyclerAdapter.addItem(memoItem);
+        memoRecyclerAdapter.addItem(memoItem);
+
+        recyclerView.setAdapter(memoRecyclerAdapter);
 
         return view;
     }

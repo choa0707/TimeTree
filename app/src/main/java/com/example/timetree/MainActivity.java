@@ -85,6 +85,8 @@ public class MainActivity extends AppCompatActivity {
                         case R.id.mycalendar:
                             Toast.makeText(getApplicationContext(), "내 일정을 불러옵니다.", Toast.LENGTH_SHORT).show();
                             MyGlobals.getInstance().setgroupKey("");
+                            //TODO:1
+                            drawerLayout.closeDrawers();
                             onRestart();
                             //replaceFragement();
                             break;
