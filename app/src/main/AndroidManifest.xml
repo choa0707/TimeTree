@@ -10,6 +10,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:windowSoftInputMode="adjustNothing">
+        <activity android:name=".MemoAddActivity"></activity>
+        <activity android:name=".MemoEditActivity"></activity>
         <activity
             android:name=".EventListActivity"
             android:theme="@android:style/Theme.DeviceDefault.Light.Dialog" />

@@ -56,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
 
         View view = navigationView.getHeaderView(0);
 
+
         nav_name = (TextView)view.findViewById(R.id.nav_name);
         nav_email = (TextView)view.findViewById(R.id.nav_email);
 
@@ -85,10 +86,9 @@ public class MainActivity extends AppCompatActivity {
                         case R.id.mycalendar:
                             Toast.makeText(getApplicationContext(), "내 일정을 불러옵니다.", Toast.LENGTH_SHORT).show();
                             MyGlobals.getInstance().setgroupKey("");
-                            //TODO:1
                             drawerLayout.closeDrawers();
                             onRestart();
-                            //replaceFragement();
+
                             break;
                         case R.id.account:
                             Toast.makeText(getApplicationContext(), "계정", Toast.LENGTH_SHORT).show();
@@ -111,8 +111,6 @@ public class MainActivity extends AppCompatActivity {
                     return true;
                 }
             });
-
-
 
 
 

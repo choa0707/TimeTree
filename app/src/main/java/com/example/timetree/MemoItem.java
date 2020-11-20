@@ -5,28 +5,40 @@ public class MemoItem {
     String date;
     String detail;
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setKey(String key) {
+        this.key = key;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public String getKey() {
+        return key;
     }
 
-    public void setDetail(String detail) {
-        this.detail = detail;
-    }
-
+    String key;
     public String getTitle() {
         return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getDate() {
         return date;
     }
 
+    public void setDate(String date) {
+        this.date = date;
+    }
+
     public String getDetail() {
         return detail;
+    }
+
+    public void setDetail(String detail) {
+        this.detail = detail;
+    }
+
+    public MemoItem() {
     }
 
     public MemoItem(String title, String date, String detail) {

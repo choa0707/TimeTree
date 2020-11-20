@@ -1,8 +1,10 @@
 package com.example.timetree;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,8 +14,10 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import com.applandeo.materialcalendarview.CalendarUtils;
 import com.applandeo.materialcalendarview.CalendarView;
 import com.applandeo.materialcalendarview.EventDay;
 import com.applandeo.materialcalendarview.listeners.OnDayClickListener;
@@ -35,7 +39,7 @@ import java.util.List;
 
 public class FragmentCalender extends Fragment {
     private View view;
-    int s_y, s_m, s_d, e_y,e_m,e_d;
+    int s_y, s_m, s_d, e_y,e_m,e_d, color;
     FloatingActionButton fab;
     ArrayList<EventItem> eventItems = new ArrayList<>();
     @Nullable
@@ -43,6 +47,8 @@ public class FragmentCalender extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState)
     {
+
+        String eventcolor;
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_calendar, container, false);
         List<EventDay> events = new ArrayList<>();
@@ -58,6 +64,7 @@ public class FragmentCalender extends Fragment {
             }
             else {myRef = database.getReference().child("users").child(uid).child("events");}
 
+
             myRef.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
@@ -67,6 +74,7 @@ public class FragmentCalender extends Fragment {
                         eventItems.add(i.getValue(EventItem.class));
 
                         EventItem eventItem = i.getValue(EventItem.class);
+                        color = eventItem.getColor();
                         s_y = eventItem.getStart_year();
                         s_m = eventItem.getStart_month();
                         s_d = eventItem.getStart_day();
@@ -74,11 +82,30 @@ public class FragmentCalender extends Fragment {
                         e_m = eventItem.getEnd_month();
                         e_d = eventItem.getEnd_day();
                         Log.d("test", s_y + "/" + s_m + "/" + s_d + "/" + e_y + "/" + e_m + "/" + e_d);
+
+
+                        //20201110 아이콘 색상 지정 수정하기
+
                         for (int j = s_d; j <= e_d; j++) {
                             Calendar calendar1 = Calendar.getInstance();
                             calendar1.set(s_y, s_m - 1, j);
-                            events.add(new EventDay(calendar1, R.drawable.ic_baseline_event_24, Color.parseColor("#228B22")));
-                            calendarView.setEvents(events);
+
+
+                            if (color == 0){
+                                events.add(new EventDay(calendar1,R.drawable.ic_baseline_star_rate_rad, Color.parseColor("#228B22")));
+                                calendarView.setEvents(events);
+                            }else if(color == 1){
+                                events.add(new EventDay(calendar1,R.drawable.ic_baseline_star_rate_orange, Color.parseColor("#228B22")));
+                                calendarView.setEvents(events);
+                            }else if(color == 2){
+                                events.add(new EventDay(calendar1,R.drawable.ic_baseline_star_rate_yellow, Color.parseColor("#228B22")));
+                                calendarView.setEvents(events);
+                            }else if(color == 3){
+                                events.add(new EventDay(calendar1, R.drawable.ic_baseline_star_rate_green, Color.parseColor("#228B22")));
+                                calendarView.setEvents(events);
+                            }
+
+
                             Log.d("test", s_y + "/" + s_m + "/" + j);
                         }
 
@@ -122,5 +149,6 @@ public class FragmentCalender extends Fragment {
         });
         return view;
     }
+
 
 }
