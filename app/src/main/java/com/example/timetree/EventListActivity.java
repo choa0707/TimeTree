@@ -77,7 +77,7 @@ public class EventListActivity extends Activity {
                 for (DataSnapshot i : dataSnapshot.getChildren()) {
 
                     EventItem eventItem = i.getValue(EventItem.class);
-
+                    eventItem.setKey(i.getKey());
                     sdate = Integer.parseInt(changeDate(eventItem.getStart_year(), eventItem.getStart_month(), eventItem.getStart_day()));
                     edate = Integer.parseInt(changeDate(eventItem.getEnd_year(), eventItem.getEnd_month(), eventItem.getEnd_day()));
 

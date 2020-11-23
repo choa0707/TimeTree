@@ -4,16 +4,26 @@ import android.graphics.Bitmap;
 import android.widget.ImageView;
 
 public class FeedItem {
-    String date;
+    String s_date;
+    String e_date;
     String title;
     Bitmap img;
+    long comp;
 
-    public String getDate() {
-        return date;
+    public String getS_date() {
+        return s_date;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setS_date(String s_date) {
+        this.s_date = s_date;
+    }
+
+    public String getE_date() {
+        return e_date;
+    }
+
+    public void setE_date(String e_date) {
+        this.e_date = e_date;
     }
 
     public String getTitle() {
@@ -32,11 +42,19 @@ public class FeedItem {
         this.img = img;
     }
 
-    public FeedItem(String date, String title, Bitmap img) {
-        this.date = date;
-        this.title = title;
-        this.img = img;
+    public long getComp() {
+        return comp;
     }
 
+    public void setComp(long comp) {
+        this.comp = comp;
+    }
 
+    public FeedItem(String s_date, String e_date, String title, Bitmap img, long comp) {
+        this.s_date = s_date;
+        this.e_date = e_date;
+        this.title = title;
+        this.img = img;
+        this.comp = comp;
+    }
 }

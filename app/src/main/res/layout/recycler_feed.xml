@@ -35,7 +35,7 @@
                         android:layout_height="wrap_content">
 
                         <TextView
-                            android:id="@+id/feed_date"
+                            android:id="@+id/feed_s_date"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="2020년 10월 10일 10시 10분"
@@ -44,6 +44,8 @@
                             android:textColor="#095F81"
                             android:layout_gravity="center"
                             />
+
+
 
                         <ImageView
                             android:id="@+id/feed_img"
@@ -57,7 +59,16 @@
 
 
                 </LinearLayout>
-
+                <TextView
+                    android:id="@+id/feed_e_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2020년 10월 10일 10시 10분"
+                    android:textSize="20dp"
+                    android:layout_marginTop="5dp"
+                    android:textColor="#095F81"
+                    android:layout_gravity="center"
+                    />
 
                 <TextView
                     android:id="@+id/feed_title"

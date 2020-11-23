@@ -1,9 +1,21 @@
 package com.example.timetree;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class EventItem {
+public class EventItem implements Serializable {
+    private static final long serialVersionUID = 1L;
     String title="";
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
+
+    String key="";
     int category=0;
     int color=0;
     int alarm=0;

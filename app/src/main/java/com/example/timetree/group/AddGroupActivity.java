@@ -221,6 +221,7 @@ public class AddGroupActivity extends AppCompatActivity {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             progressDialog.dismiss(); //업로드 진행 Dialog 상자 닫기
+                            finish();
                             Toast.makeText(getApplicationContext(), "업로드 완료!", Toast.LENGTH_SHORT).show();
                         }
                     })
@@ -248,6 +249,5 @@ public class AddGroupActivity extends AppCompatActivity {
     }
     public void onDestroy() {
         super.onDestroy();
-        finish();
     }
 }
