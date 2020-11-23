@@ -155,17 +155,6 @@ public class EventAdd extends AppCompatActivity {
             }
         });
 
-//        //20201111 아이콘 컬러 에러
-//        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getApplicationContext(), R.array.color, android.R.layout.simple_spinner_item);
-//
-//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//        color.setAdapter(adapter);
-//
-//        String strColor = color.getSelectedItem().toString();
-//
-//        Intent itcolor = new Intent(getApplicationContext(), MainActivity.class);
-//        itcolor.putExtra("eventcolor", strColor);
-//        startActivity(itcolor);
 
         category.setPrompt("카테고리");
         category.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
