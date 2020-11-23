@@ -10,13 +10,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:windowSoftInputMode="adjustNothing">
-        <activity android:name=".MemoAddActivity"></activity>
-        <activity android:name=".MemoEditActivity"></activity>
+
         <activity
             android:name=".EventListActivity"
             android:theme="@android:style/Theme.DeviceDefault.Light.Dialog" />
         <activity android:name=".group.AddGroupActivity" />
-        <activity android:name=".SignupActivity" />
+        <activity android:name=".MemoAddActivity"/>
+        <activity android:name=".MemoEditActivity"/>
         <activity android:name=".LoginActivity" />
         <activity android:name=".SplashActivity">
             <intent-filter>
