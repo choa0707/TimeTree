@@ -90,7 +90,6 @@ public class FragmentCalender extends Fragment {
                             Calendar calendar1 = Calendar.getInstance();
                             calendar1.set(s_y, s_m - 1, j);
 
-
                             if (color == 0){
                                 events.add(new EventDay(calendar1,R.drawable.ic_baseline_star_rate_rad, Color.parseColor("#228B22")));
                                 calendarView.setEvents(events);

@@ -48,7 +48,8 @@ public class EventListAdapter extends BaseAdapter {
             viewHolder = (ViewHolder)convertView.getTag();
         }
         viewHolder.title.setText(eventItems.get(position).getTitle());
-        viewHolder.time.setText(eventItems.get(position).getStart_hour()+":"+eventItems.get(position).getStart_minute()+"~"+eventItems.get(position).getEnd_hour()+":"+eventItems.get(position).getEnd_minute());
+        viewHolder.time.setText(String.format("%02d",eventItems.get(position).getStart_hour())+":"+String.format("%02d",eventItems.get(position).getStart_minute())+"~"+
+                String.format("%02d",eventItems.get(position).getEnd_hour())+":"+String.format("%02d",eventItems.get(position).getEnd_minute()));
         return convertView;
     }
 
